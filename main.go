@@ -42,6 +42,7 @@ func main() {
 	srcResult, err := svc.DescribeTaskDefinition(src)
 	if err != nil {
 		fmt.Println(err)
+		os.Exit(1)
 	}
 
 	dest := &ecs.DescribeTaskDefinitionInput{
@@ -51,6 +52,7 @@ func main() {
 	destResult, err := svc.DescribeTaskDefinition(dest)
 	if err != nil {
 		fmt.Println(err)
+		os.Exit(1)
 	}
 
 	diff := diff.Diff(srcResult.GoString(), destResult.GoString())
