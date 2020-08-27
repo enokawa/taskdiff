@@ -35,6 +35,7 @@ func main() {
 
 	svc := ecs.New(sess)
 
+	// TODO: implement Describe method
 	src := &ecs.DescribeTaskDefinitionInput{
 		TaskDefinition: aws.String(args1),
 	}
