@@ -13,7 +13,7 @@ import (
 func validateArgs() error {
 	argLength := len(os.Args)
 	if argLength != 3 {
-		fmt.Println("error Argments.")
+		fmt.Println("Two arguments must be specified")
 		os.Exit(1)
 	}
 
@@ -22,7 +22,7 @@ func validateArgs() error {
 
 func main() {
 	if err := validateArgs(); err != nil {
-		fmt.Println("validate error")
+		fmt.Println(err)
 		os.Exit(1)
 	}
 
