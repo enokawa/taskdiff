@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"os"
 
@@ -13,11 +14,23 @@ import (
 func validateArgs() error {
 	argLength := len(os.Args)
 	if argLength != 3 {
-		fmt.Println("Two arguments must be specified")
-		os.Exit(1)
+		return errors.New("Two arguments must be specified")
 	}
 
 	return nil
+}
+
+func describeTaskDefinition(name string, svc *ecs.ECS) (*ecs.DescribeTaskDefinitionOutput, error) {
+	input := &ecs.DescribeTaskDefinitionInput{
+		TaskDefinition: aws.String(name),
+	}
+
+	result, err := svc.DescribeTaskDefinition(input)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
 }
 
 func main() {
@@ -26,8 +39,8 @@ func main() {
 		os.Exit(1)
 	}
 
-	args1 := os.Args[1]
-	args2 := os.Args[2]
+	srcTaskDef := os.Args[1]
+	destTaskDef := os.Args[2]
 
 	sess := session.Must(session.NewSessionWithOptions(session.Options{
     SharedConfigState: session.SharedConfigEnable,
@@ -35,22 +48,13 @@ func main() {
 
 	svc := ecs.New(sess)
 
-	// TODO: implement Describe method
-	src := &ecs.DescribeTaskDefinitionInput{
-		TaskDefinition: aws.String(args1),
-	}
-
-	srcResult, err := svc.DescribeTaskDefinition(src)
+	srcResult, err := describeTaskDefinition(srcTaskDef, svc)
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
 	}
 
-	dest := &ecs.DescribeTaskDefinitionInput{
-		TaskDefinition: aws.String(args2),
-	}
-
-	destResult, err := svc.DescribeTaskDefinition(dest)
+	destResult, err := describeTaskDefinition(destTaskDef, svc)
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
