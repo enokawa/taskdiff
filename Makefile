@@ -16,4 +16,4 @@ packages:
 	goxz -pv=$(VERSION) -static -build-ldflags=$(BUILD_LDFLAGS) -d=./pkg/$(VERSION)
 
 release:
-	ghr $(VERSION) pkg/$(VERSION)
+	ghr $(VERSION) -n $(VERSION) pkg/$(VERSION)
