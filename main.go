@@ -11,8 +11,8 @@ import (
 	"github.com/kylelemons/godebug/diff"
 )
 
-func validateArgs() error {
-	argLength := len(os.Args)
+func validateArgs(args []string) error {
+	argLength := len(args)
 	if argLength != 3 {
 		return errors.New("Two arguments must be specified")
 	}
@@ -34,7 +34,7 @@ func describeTaskDefinition(name string, svc *ecs.ECS) (*ecs.DescribeTaskDefinit
 }
 
 func main() {
-	if err := validateArgs(); err != nil {
+	if err := validateArgs(os.Args); err != nil {
 		fmt.Println(err)
 		os.Exit(1)
 	}
@@ -43,7 +43,7 @@ func main() {
 	destTaskDef := os.Args[2]
 
 	sess := session.Must(session.NewSessionWithOptions(session.Options{
-    SharedConfigState: session.SharedConfigEnable,
+		SharedConfigState: session.SharedConfigEnable,
 	}))
 
 	svc := ecs.New(sess)
