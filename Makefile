@@ -13,4 +13,4 @@ test:
 	go test
 
 packages:
-	goxz -pv=$(VERSION) -static -build-ldflags=$(BUILD_LDFLAGS) -d=./pkg/
+	goxz -pv=$(VERSION) -static -build-ldflags=$(BUILD_LDFLAGS) -d=./pkg/$(VERSION)
