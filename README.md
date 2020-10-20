@@ -11,5 +11,5 @@ $ go get github.com/enokawa/taskdiff
 ## Usage
 
 ```sh
-$ taskdiff <task-def:1> <task-def:2>
+$ taskdiff task-def:1 task-def:2
 ```
